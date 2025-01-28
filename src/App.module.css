@@ -1,0 +1,21 @@
+.wrapper{
+  max-width: 70rem; /* largura máxima -  */
+  margin: 2rem auto;
+  padding: 0 1rem;
+
+  display: grid; /* cria um grid */
+  grid-template-columns: 256px 1fr; /* tamanho da sidebar e do conteúdo */
+  gap: 2rem; /* espaçamento entre as colunas */
+  align-items: flex-start; /* sidebar sempre fique alinhado no topo */
+}
+
+@media (max-width: 768px){
+  
+  html{
+    font-size: 87.5%; /* 14px */
+  }
+  
+  .wrapper{
+    grid-template-columns: 1fr; 
+  }
+}
