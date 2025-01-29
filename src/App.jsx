@@ -37,7 +37,7 @@ const posts = [
    {
       id: 2,
       author: {
-         avatarUrl: 'https://github.com/pepato.png', 
+         avatarUrl: 'https://github.com/carlospepato.png', 
       name:'Carlos Pepato', 
       role:'Educator'
       }, 
