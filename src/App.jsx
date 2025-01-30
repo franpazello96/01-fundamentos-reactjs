@@ -19,16 +19,16 @@ const posts = [
       content: [
             {
             type: 'paragraph', 
-            content: 'It was the release of Letraset sheets.', 
+            content: 'conteudo do post', 
             
             },
             {
                type: 'paragraph', 
-               content: 'It was Letraset sheets.'
+               content: 'continuação do conteudo do post'
             },
             {
                type: 'paragraph', 
-               content: 'It was popularised in the 1960s.'
+               content: 'segunda parte do conteudo do post'
             },
          ], 
       publishedAt: new Date('2025-01-25 20:13:12'),

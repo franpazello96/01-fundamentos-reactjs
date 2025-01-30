@@ -3,8 +3,15 @@ import { format, formatDistanceToNow } from 'date-fns'
 import ptBr from 'date-fns/locale/pt-BR'
 import { Comment } from "./Comment"
 import { Avatar } from "./Avatar"
+import { useState } from 'react'
 
 export function Post({author, publishedAt, content}) {
+  const [comments, setComments] = useState([
+  "Postagem incrível!",
+  ]);
+
+  const [newComment, setNewComment] = useState('');
+  
   const publishedDateFormatted = format(publishedAt, "dd LLL yyyy HH:mm", {
     locale: ptBr
   })
@@ -13,6 +20,17 @@ export function Post({author, publishedAt, content}) {
     locale: ptBr, 
     addSuffix: true
   })
+
+  function handleCreateNewComment() {
+    event.preventDefault();
+    setComments([...comments, newComment]);
+    setNewComment('');
+  }
+
+  function handleNewCommmentChange() {
+    setNewComment(event.target.value);
+
+  }
 
   return(
     <article className={styles.post}>
@@ -38,18 +56,25 @@ export function Post({author, publishedAt, content}) {
           })}
         </div>
 
-        <form className={styles.commentForm}> 
+        <form onSubmit={handleCreateNewComment} className={styles.commentForm}> 
           <strong>Deixe seu FeedBack</strong>
-          <textarea placeholder="Comente aqui" />
+
+          <textarea 
+          name="comment" 
+          placeholder="Comente aqui" 
+          onChange={handleNewCommmentChange} 
+          value={newComment}
+          />
+
           <footer>
             <button type="submit">Publicar</button>
           </footer>
         </form>
 
         <div className={styles.commentList}>
-          <Comment />
-          <Comment />
-          <Comment />
+          {comments.map(comment => {
+            return <Comment content={comment} />
+          })}
         </div>
     </article>
   )
