@@ -1,45 +1,36 @@
 import styles from './Post.module.css'
 import { format, formatDistanceToNow } from 'date-fns'
-import {ptBr} from 'date-fns/locale/pt-BR'
+import ptBr from 'date-fns/locale/pt-BR'
 import { Comment } from "./Comment"
 import { Avatar } from "./Avatar"
 import { useState } from 'react'
 
 export function Post({author, publishedAt, content}) {
   const [comments, setComments] = useState([]);
-
   const [newComment, setNewComment] = useState(''); 
   // Estado para armazenar o novo comentário
-  
   const publishedDateFormatted = format(publishedAt, "dd LLL yyyy HH:mm", {
     locale: ptBr
   })
-
   const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
     locale: ptBr, 
     addSuffix: true
   })
-
-
-
 // Função para criar um novo comentário
   function handleCreateNewComment() {
     event.preventDefault();
     setComments([...comments, newComment]);
     setNewComment('');
   }
-
 // Função para atualizar o estado do novo comentário
   function handleNewCommmentChange() {
+    event.target.setCustomValidity('');
     setNewComment(event.target.value);
   }
-
-
   function handleNewCommentInvalid(){
-    console.log(event);
+   // console.log(event);
+   event.target.setCustomValidity('O comentário não pode ser vazio');
   }
-
-
   function deleteComment (commentToDelete){
     //console.log(`deletar comentario ${comment}`);
     const commentsWithoutDeletedOne = comments.filter(commentItem => {
@@ -49,7 +40,7 @@ export function Post({author, publishedAt, content}) {
     setComments(commentsWithoutDeletedOne);
   }
 
-
+const isNewCommentEmpty = newComment.length === 0; 
 
   return(
     <article className={styles.post}>
@@ -86,13 +77,20 @@ export function Post({author, publishedAt, content}) {
               required
             />
           <footer>
-            <button type="submit">Publicar</button>
+            <button type="submit" disabled={isNewCommentEmpty} >
+              Publicar
+            </button>
           </footer>
         </form>
 
         <div className={styles.commentList}>
           {comments.map(comment => {
-            return <Comment key={content} content={comment} onDeleteComment={deleteComment} />
+            return (
+            <Comment 
+            key={content} 
+            content={comment} 
+            onDeleteComment={deleteComment} 
+            />)
           })}
         </div>
     </article>
